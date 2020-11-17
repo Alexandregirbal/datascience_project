@@ -7,14 +7,12 @@ import re
 from getpass import getpass
 from pprint import pprint
 
-# config variables
 from config import username
 from config import password
 
 
 def deleteForwardedMessagesFromMessage(message: str):
     nextMessage = re.split(r"\n.*[\,].*\<\s*.*>", message)[0]
-    print(nextMessage)
     return nextMessage
 
 
@@ -47,7 +45,7 @@ def getEmails(username, password):
     subjects = []
     contents = []
 
-    for i in range(5):
+    for i in range(len(UIDs)):
         raw_message = imapobj.fetch(UIDs[i], ["BODY[]"])
         message = pyzmail.PyzMessage.factory(raw_message[UIDs[i]][b"BODY[]"])
 
@@ -70,6 +68,5 @@ def getEmails(username, password):
         }
     )
     df.to_csv(f"outputs/emailsOf{username}.csv", index=False)
-
-
-getEmails(username, password)
+    print("Data fetched, csv written with success.")
+    return df
