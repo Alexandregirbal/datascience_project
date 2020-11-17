@@ -3,6 +3,7 @@ import imaplib
 import smtplib
 import pyzmail
 import pandas as pd
+import re
 from getpass import getpass
 from pprint import pprint
 
@@ -11,8 +12,13 @@ from config import username
 from config import password
 
 
+def deleteForwardedMessagesFromMessage(message: str):
+    nextMessage = re.split(r"\n.*[\,].*\<\s*.*>", message)[0]
+    print(nextMessage)
+    return nextMessage
+
+
 def getEmails(username, password):
-    print(username, password)
     # Ask for credentials
     if username == "" and password == "":
         username = input("Enter user email: ")  # alexandre.girbal.pro@gmail.com
@@ -29,8 +35,6 @@ def getEmails(username, password):
     smtpobj.ehlo()
     smtpobj.starttls()
     smtpobj.login(username, password)
-
-    pprint(imapobj.list_folders())
 
     imaplib._MAXLINE = 10000000
 
@@ -51,9 +55,10 @@ def getEmails(username, password):
         receiversAdresses.append(message.get_addresses("to"))
         dates.append(message.get_decoded_header("date"))
         subjects.append(message.get_subject())
-        contents.append(
+        newmessage = deleteForwardedMessagesFromMessage(
             message.text_part.get_payload().decode(message.text_part.charset)
         )
+        contents.append(newmessage)
 
     df = pd.DataFrame(
         {
