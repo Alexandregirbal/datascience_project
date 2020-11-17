@@ -6,6 +6,7 @@ import pandas as pd
 import re
 from getpass import getpass
 from pprint import pprint
+from datetime import date
 
 from config import username
 from config import password
@@ -16,8 +17,8 @@ def deleteForwardedMessagesFromMessage(message: str):
     return nextMessage
 
 
-def getEmails(username, password):
-    # Ask for credentials
+def getEmails(username, password, limit=-1, sender="", beginDate="", endDate=""):
+    # Ask for credentials if needed
     if username == "" and password == "":
         username = input("Enter user email: ")  # alexandre.girbal.pro@gmail.com
         password = getpass("Enter user password: ")
@@ -37,7 +38,20 @@ def getEmails(username, password):
     imaplib._MAXLINE = 10000000
 
     imapobj.select_folder("Inbox", readonly=True)
-    UIDs = imapobj.search(["FROM", "fabienvol@gmail.com"])
+    conditions = []
+    if sender != "":
+        conditions.append("FROM")
+        conditions.append(sender)
+
+    if beginDate != "":
+        conditions.append("SINCE")
+        conditions.append(beginDate)
+
+    if endDate != "":
+        conditions.append("BEFORE")
+        conditions.append(endDate)
+
+    UIDs = imapobj.search(conditions)
 
     sendersAdresses = []
     receiversAdresses = []
@@ -45,7 +59,11 @@ def getEmails(username, password):
     subjects = []
     contents = []
 
-    for i in range(len(UIDs)):
+    if limit != -1:
+        numberOfIterations = limit
+    else:
+        numberOfIterations = len(UIDs)
+    for i in range(numberOfIterations):
         raw_message = imapobj.fetch(UIDs[i], ["BODY[]"])
         message = pyzmail.PyzMessage.factory(raw_message[UIDs[i]][b"BODY[]"])
 
