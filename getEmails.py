@@ -20,12 +20,13 @@ def deleteForwardedMessagesFromMessage(message: str):
 def getEmails(username, password, limit=-1, sender="", beginDate="", endDate=""):
     # Ask for credentials if needed
     if username == "" and password == "":
-        username = input("Enter user email: ")  # alexandre.girbal.pro@gmail.com
+        # alexandre.girbal.pro@gmail.com
+        username = input("Enter user email: ")
         password = getpass("Enter user password: ")
     print("Fetching emails of ", username, "...")
 
-    imap_server = "imap.gmail.com"
-    smtp_server = "smtp.gmail.com"
+    imap_server = "imap-mail.outlook.com"
+    smtp_server = "smtp.outlook.com"
 
     imapobj = imapclient.IMAPClient(imap_server, ssl=True)
     imapobj.login(username, password)
@@ -52,7 +53,6 @@ def getEmails(username, password, limit=-1, sender="", beginDate="", endDate="")
         conditions.append(endDate)
 
     UIDs = imapobj.search(conditions)
-
     sendersAdresses = []
     receiversAdresses = []
     dates = []
@@ -63,7 +63,7 @@ def getEmails(username, password, limit=-1, sender="", beginDate="", endDate="")
         numberOfIterations = limit
     else:
         numberOfIterations = len(UIDs)
-    for i in range(numberOfIterations):
+    for i in range(numberOfIterations-1):
         raw_message = imapobj.fetch(UIDs[i], ["BODY[]"])
         message = pyzmail.PyzMessage.factory(raw_message[UIDs[i]][b"BODY[]"])
 

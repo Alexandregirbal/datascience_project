@@ -3,6 +3,9 @@ import sys
 # Functions
 from getEmails import getEmails
 
+# from generateWeeklyTrafic import generateWeeklyTraficGraph
+from generateTopNSenders import generateTopNSenders
+
 # config variables
 from config import username
 from config import password
@@ -24,3 +27,5 @@ if analysis == 0:
     analysis = input("Enter the analysis type(\n1:Remi\n2:David\n3:Alex\n--->")
 
 pandasDataFrameOfEmails = getEmails(username, password, 5, sender, beginDate, endDate)
+# generateWeeklyTraficGraph(pandasDataFrameOfEmails)
+generateTopNSenders(pandasDataFrameOfEmails)
