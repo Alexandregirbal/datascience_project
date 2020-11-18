@@ -1,4 +1,4 @@
-sender = "vincent.berry@umontpellier.fr"
+sender = "noreply@github.com"
 beginDate = ""
 endDate = ""
-analysis = 0
+analysis = 1

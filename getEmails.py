@@ -20,13 +20,14 @@ def deleteForwardedMessagesFromMessage(message: str):
 def getEmails(username, password, limit=-1, sender="", beginDate="", endDate=""):
     # Ask for credentials if needed
     if username == "" and password == "":
-        # alexandre.girbal.pro@gmail.com
         username = input("Enter user email: ")
         password = getpass("Enter user password: ")
     print("Fetching emails of ", username, "...")
 
-    imap_server = "imap-mail.outlook.com"
-    smtp_server = "smtp.outlook.com"
+    # imap_server = "imap-mail.outlook.com"
+    # smtp_server = "smtp.outlook.com"
+    imap_server = "imap.gmail.com"
+    smtp_server = "smtp.gmail.com"
 
     imapobj = imapclient.IMAPClient(imap_server, ssl=True)
     imapobj.login(username, password)
@@ -56,6 +57,7 @@ def getEmails(username, password, limit=-1, sender="", beginDate="", endDate="")
     sendersAdresses = []
     receiversAdresses = []
     dates = []
+    days = []
     subjects = []
     contents = []
 
@@ -63,13 +65,14 @@ def getEmails(username, password, limit=-1, sender="", beginDate="", endDate="")
         numberOfIterations = limit
     else:
         numberOfIterations = len(UIDs)
-    for i in range(numberOfIterations-1):
+    for i in range(numberOfIterations - 1):
         raw_message = imapobj.fetch(UIDs[i], ["BODY[]"])
         message = pyzmail.PyzMessage.factory(raw_message[UIDs[i]][b"BODY[]"])
 
         sendersAdresses.append(message.get_addresses("from"))
         receiversAdresses.append(message.get_addresses("to"))
         dates.append(message.get_decoded_header("date"))
+        days.append(message.get_decoded_header("date").split(",")[0])
         subjects.append(message.get_subject())
         newmessage = deleteForwardedMessagesFromMessage(
             message.text_part.get_payload().decode(message.text_part.charset)
@@ -80,6 +83,7 @@ def getEmails(username, password, limit=-1, sender="", beginDate="", endDate="")
         {
             "sendersAdresses": sendersAdresses,
             "receiversAdresses": receiversAdresses,
+            "days": days,
             "dates": dates,
             "subjects": subjects,
             "contents": contents,
