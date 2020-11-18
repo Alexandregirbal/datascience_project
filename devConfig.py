@@ -1,4 +1,4 @@
-sender = "noreply@github.com"
-beginDate = ""
-endDate = ""
-analysis = 1
+sender = 0
+beginDate = 0
+endDate = 0
+analysis = 2

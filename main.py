@@ -19,14 +19,16 @@ if sender == 0:
     sender = input("Enter the email adresse of the sender: ")
 
 if beginDate == 0:
-    beginDate = input("Enter the begin date of the emails to treat (ex: 01-Aug-2019): ")
+    beginDate = input(
+        "Enter the begin date of the emails to treat (ex: 01-Aug-2019): ")
 
 if endDate == 0:
-    endDate = input("Enter the end date of the emails to treat(ex: 31-Aug-2019):")
+    endDate = input(
+        "Enter the end date of the emails to treat(ex: 31-Aug-2019):")
 
 if analysis == 0:
     analysis = input(
-        "Enter the analysis type \n1:Remi\n2:David\n3:Weekly trafic graph\n--->"
+        "Enter the analysis type \n1:Remi\n2:Top N Senders\n3:Weekly trafic graph\n--->"
     )
 
 try:
@@ -39,7 +41,6 @@ except:
 if analysis == 1:
     print("remi")
 if analysis == 2:
-    print("david")
-    # generateTopNSenders(pandasDataFrameOfEmails)
+    generateTopNSenders(pandasDataFrameOfEmails)
 if analysis == 3:
     generateWeeklyTraficGraph(pandasDataFrameOfEmails)
