@@ -25,7 +25,9 @@ if endDate == 0:
     endDate = input("Enter the end date of the emails to treat(ex: 31-Aug-2019):")
 
 if analysis == 0:
-    analysis = input("Enter the analysis type \n1:Remi\n2:David\n3:Alex\n--->")
+    analysis = input(
+        "Enter the analysis type \n1:Remi\n2:David\n3:Weekly trafic graph\n--->"
+    )
 
 try:
     pandasDataFrameOfEmails = pd.read_csv(f"./outputs/emailsOf{username}.csv")
@@ -33,5 +35,11 @@ except:
     pandasDataFrameOfEmails = getEmails(
         username, password, -1, sender, beginDate, endDate
     )
-generateWeeklyTraficGraph(pandasDataFrameOfEmails)
-# generateTopNSenders(pandasDataFrameOfEmails)
+
+if analysis == 1:
+    print("remi")
+if analysis == 2:
+    print("david")
+    # generateTopNSenders(pandasDataFrameOfEmails)
+if analysis == 3:
+    generateWeeklyTraficGraph(pandasDataFrameOfEmails)
