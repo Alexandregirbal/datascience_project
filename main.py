@@ -6,6 +6,7 @@ from getEmails import getEmails
 
 from analysis.generateWeeklyTrafic import generateWeeklyTraficGraph
 from analysis.generateTopNSenders import generateTopNSenders
+from analysis.generateCloudWord import generateCloudWord
 
 # config variables
 from config import username
@@ -39,7 +40,7 @@ except:
     )
 
 if analysis == 1:
-    print("remi")
+    generateCloudWord(pandasDataFrameOfEmails)
 if analysis == 2:
     generateTopNSenders(pandasDataFrameOfEmails)
 if analysis == 3:
