@@ -1,4 +1,4 @@
-sender = 0
-beginDate = 0
-endDate = 0
+sender = "github"
+beginDate = "01-Aug-2020"
+endDate = ""
 analysis = 2
