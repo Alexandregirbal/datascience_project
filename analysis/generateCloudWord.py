@@ -12,8 +12,9 @@ import numpy as np
 import random
 
 
-def grey_color_func(word, font_size, position, orientation, random_state=None,
-                    **kwargs):
+def grey_color_func(
+    word, font_size, position, orientation, random_state=None, **kwargs
+):
     return "hsl(203, 100%%, %d%%)" % random.randint(30, 60)
 
 
@@ -63,18 +64,14 @@ def generateCloudWord(dataFrame):
     # Create the wordcloud
     d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
     mask = np.array(Image.open(path.join(d, "logo.png")))
-    wordcloud = WordCloud(width=800, mask=mask,
-                          height=800, background_color="white")
+    wordcloud = WordCloud(width=800, mask=mask, height=800, background_color="white")
     wordcloud.generate(text)
     plt.figure(figsize=(8, 8))
-    plt.imshow(wordcloud.recolor(color_func=grey_color_func,
-                                 random_state=3), interpolation="bilinear")
+    plt.imshow(
+        wordcloud.recolor(color_func=grey_color_func, random_state=3),
+        interpolation="bilinear",
+    )
     plt.axis("off")
     plt.margins(x=0, y=0)
-<<<<<<< HEAD
-    plt.title("Most used words in your mails content",
-              fontsize=20, ha="center", pad=20)
-=======
-    plt.title("Most Used Words in your content mails", fontsize=20, ha="center", pad=20)
->>>>>>> 0fd098fdcf6c402c7a934790839ec66bda3ecb61
+    plt.title("Most used words in your mails content", fontsize=20, ha="center", pad=20)
     plt.show()
