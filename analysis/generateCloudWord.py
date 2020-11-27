@@ -38,7 +38,8 @@ def generateCloudWord(dataFrame):
 
     # Remove dowloaded stopwords
     dataFrame["contentsWithoutStop"] = dataFrame["contents"].apply(
-        lambda x: " ".join([word for word in x.split() if word.lower() not in (stop)])
+        lambda x: " ".join(
+            [word for word in x.split() if word.lower() not in (stop)])
     )
 
     # Remove personals stopwords
@@ -71,10 +72,6 @@ def generateCloudWord(dataFrame):
                                  random_state=3), interpolation="bilinear")
     plt.axis("off")
     plt.margins(x=0, y=0)
-<<<<<<< HEAD
     plt.title("Most used words in your mails content",
               fontsize=20, ha="center", pad=20)
-=======
-    plt.title("Most Used Words in your content mails", fontsize=20, ha="center", pad=20)
->>>>>>> 0fd098fdcf6c402c7a934790839ec66bda3ecb61
     plt.show()
