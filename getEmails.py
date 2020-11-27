@@ -42,17 +42,20 @@ def getEmails(username, password, limit=-1, sender="", beginDate="", endDate="")
     imapobj.select_folder("Inbox", readonly=True)
     conditions = []
     if sender != "":
+        print("sender" + sender)
         conditions.append("FROM")
         conditions.append(sender)
 
     if beginDate != "":
+        print("beginDate" + beginDate)
         conditions.append("SINCE")
         conditions.append(beginDate)
 
     if endDate != "":
+        print("endDate" + endDate)
         conditions.append("BEFORE")
         conditions.append(endDate)
-
+    print(conditions)
     UIDs = imapobj.search(conditions)
     sendersAdresses = []
     receiversAdresses = []
