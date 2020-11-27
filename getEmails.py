@@ -17,17 +17,21 @@ def deleteForwardedMessagesFromMessage(message: str):
     return nextMessage
 
 
-def getEmails(username, password, limit=-1, sender="", beginDate="", endDate=""):
+def getEmails(
+    username,
+    password,
+    limit=-1,
+    sender="",
+    beginDate="",
+    endDate="",
+    imap_server="imap.gmail.com",
+    smtp_server="smtp.gmail.com",
+):
     # Ask for credentials if needed
     if username == "" and password == "":
         username = input("Enter user email: ")
         password = getpass("Enter user password: ")
     print("Fetching emails of ", username, "...")
-
-    # imap_server = "imap-mail.outlook.com"
-    # smtp_server = "smtp.outlook.com"
-    imap_server = "imap.gmail.com"
-    smtp_server = "smtp.gmail.com"
 
     imapobj = imapclient.IMAPClient(imap_server, ssl=True)
     imapobj.login(username, password)
@@ -42,7 +46,7 @@ def getEmails(username, password, limit=-1, sender="", beginDate="", endDate="")
     imapobj.select_folder("Inbox", readonly=True)
     conditions = []
     if sender != "":
-        print("sender" + sender)
+        print(sender)
         conditions.append("FROM")
         conditions.append(sender)
 

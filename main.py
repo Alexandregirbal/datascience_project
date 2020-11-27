@@ -20,17 +20,15 @@ if sender == "":
     sender = input("Enter the email adresse of the sender: ")
 
 if beginDate == "":
-    beginDate = input(
-        "Enter the begin date of the emails to treat (ex: 01-Aug-2019): ")
+    beginDate = input("Enter the begin date of the emails to treat (ex: 01-Aug-2019): ")
 
 if endDate == "":
-    endDate = input(
-        "Enter the end date of the emails to treat (ex: 31-Aug-2019):")
+    endDate = input("Enter the end date of the emails to treat (ex: 31-Aug-2019):")
 
-if analysis == 0:
+if analysis == "":
     analysis = int(
         input(
-            "Enter the analysis type \n1:Cloudword\n2:Top N Senders\n3:Weekly int(trafic graph\n--->"
+            "Enter the analysis type \n1:Cloudword\n2:Top N Senders\n3:Weekly trafic graph\n---> "
         )
     )
 
@@ -38,7 +36,13 @@ try:
     pandasDataFrameOfEmails = pd.read_csv(f"./outputs/emailsOf{username}.csv")
 except:
     pandasDataFrameOfEmails = getEmails(
-        username, password, -1, sender, beginDate, endDate
+        username,
+        password,
+        -1,
+        sender,
+        beginDate,
+        endDate,
+        # "imap-mail.outlook.com", "smtp.outlook.com"
     )
 if analysis == 1:
     generateCloudWord(pandasDataFrameOfEmails)
