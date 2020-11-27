@@ -75,3 +75,4 @@ def generateCloudWord(dataFrame):
     plt.margins(x=0, y=0)
     plt.title("Most used words in your mails content", fontsize=20, ha="center", pad=20)
     plt.show()
+    plt.savefig("./outputs/cloudWord.png")
