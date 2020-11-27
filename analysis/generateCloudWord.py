@@ -5,6 +5,16 @@ import nltk
 from nltk.corpus import stopwords
 from personalStopword import personalStopword
 import re
+from PIL import Image
+import os
+from os import path
+import numpy as np
+import random
+
+
+def grey_color_func(word, font_size, position, orientation, random_state=None,
+                    **kwargs):
+    return "hsl(203, 100%%, %d%%)" % random.randint(30, 60)
 
 
 def generateCloudWord(dataFrame):
@@ -44,12 +54,16 @@ def generateCloudWord(dataFrame):
         text.replace('"', '')
 
     # Create the wordcloud
-    wordcloud = WordCloud(width=800, height=800, background_color="white")
+    d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+    mask = np.array(Image.open(path.join(d, "logo.png")))
+    wordcloud = WordCloud(width=800, mask=mask,
+                          height=800, background_color="white")
     wordcloud.generate(text)
     plt.figure(figsize=(8, 8))
-    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.imshow(wordcloud.recolor(color_func=grey_color_func,
+                                 random_state=3), interpolation="bilinear")
     plt.axis("off")
     plt.margins(x=0, y=0)
-    plt.title("Most Used Words in your content mails",
+    plt.title("Most used words in your mails content",
               fontsize=20, ha="center", pad=20)
     plt.show()
