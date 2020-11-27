@@ -7,7 +7,7 @@
 
 ## Installation et lancement
 1. Clonez ce projet sur votre machine.
-2. Si vous souhaitez conserver vos credentials en local créez un fichier "config.py" qui est placé à la racine du projet contenant les lignes suivantes (pas d'inquiétude ce fichier est ignoré par git :wink:) :
+2. Si vous souhaitez conserver vos credentials en local créez un fichier `config.py` qui est placé à la racine du projet contenant les lignes suivantes (pas d'inquiétude ce fichier est ignoré par git :wink:) :
             
         username = "yourEmail"
         password = "yourPassword"
